@@ -26,4 +26,16 @@ async function quickstart() {
   await datastore.save(task);
   console.log(`Saved ${task.key.name}: ${task.data.description}`);
 }
+
+async function listTasks() {
+  const query = datastore.createQuery('Task').order('created');
+  const [tasks] = await datastore.runQuery(query);
+  console.log('Tasks:');
+  for (const task of tasks) {
+    const taskKey = task[datastore.KEY];
+    console.log(taskKey.id, task);
+  }
+}
+
 quickstart();
+listTasks();
